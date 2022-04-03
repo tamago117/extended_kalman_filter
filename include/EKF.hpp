@@ -94,8 +94,8 @@ EKF::EKF()
     
 
     GPS_NOISE = Eigen::MatrixXd(2, 1);
-    GPS_NOISE << std::pow(0.5, 2),
-                 std::pow(0.5, 2);
+    GPS_NOISE << std::pow(0.9, 2),
+                 std::pow(0.9, 2);
 
 
 }
