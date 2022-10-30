@@ -81,21 +81,21 @@ EKF::EKF()
     Q = Eigen::MatrixXd(4,4);
     Q << std::pow(0.1, 2), 0, 0, 0, //x
          0, std::pow(0.1, 2), 0, 0, //y
-         0, 0, std::pow(1*M_PI/180, 2), 0, //theta(degree)
-         0, 0, 0, std::pow(0.2, 2); //velocity
+         0, 0, std::pow(10*M_PI/180, 2), 0, //theta(degree)
+         0, 0, 0, std::pow(0.1, 2); //velocity
 
     R = Eigen::MatrixXd(2, 2);
-    R << std::pow(0.5, 2), 0,
-         0, std::pow(90.0*M_PI/180.0, 2);
+    R << std::pow(1.5, 2), 0,
+         0, std::pow(1.5, 2);
 
     INPUT_NOISE = Eigen::MatrixXd(2, 1);
-    INPUT_NOISE << std::pow(0.4, 2),
-                   std::pow(40*M_PI/180.0, 2);
+    INPUT_NOISE << std::pow(0.2, 2),
+                   std::pow(50*M_PI/180.0, 2);
     
 
     GPS_NOISE = Eigen::MatrixXd(2, 1);
-    GPS_NOISE << std::pow(0.9, 2),
-                 std::pow(0.9, 2);
+    GPS_NOISE << std::pow(1.2, 2),
+                 std::pow(1.2, 2);
 
 
 }
@@ -253,8 +253,8 @@ void EKF::plotCovarianceEllipse(const Eigen::MatrixXd& xEst, const Eigen::Matrix
 
     double angle = atan2(eigvec(bigind, 1), eigvec(bigind, 0));
     Eigen::MatrixXd R(2, 2);
-    R <<    cos(angle), sin(angle),
-            -sin(angle), cos(angle);
+    R <<    cos(angle), -sin(angle),
+            sin(angle), cos(angle);
     Eigen::MatrixXd fx = R * xy;
 
     std::vector<float> Px_fx, Py_fx;
